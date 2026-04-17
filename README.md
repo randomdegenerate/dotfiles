@@ -1,11 +1,12 @@
-distro: watevs
-shell: bash
+distro: cachyos
+shell: fish
 WM : I3
 I3 THEME: CATPUCCIN MACCHIATO
 Terminal : Alacritty
 Terminal Theme : cattpuccin
 compositor : picom
-Desktop Wallpaper : feh
+Desktop Wallpaper : feh (Miku)
+additional stuff: dunst, redshift
 Desktop Font : JetBrains Mono NL
 Terminal Font : JetBrains Mono NL
 Main text editor: Neovim
@@ -14,3 +15,4 @@ file explorer : thunar
 music : spotify
 browser : librewolf
 discord : Vencord
+
