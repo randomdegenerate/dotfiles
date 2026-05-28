@@ -15,15 +15,12 @@ exec xrandr --output DisplayPort-0 --mode 1920x1080 --rate 165.00
 
 
 #remove window header
-for_window [class="^.*"] border pixel 0 
+default_border pixel 0
+default_floating_border pixel 0
 
 # gaps
-gaps inner 7px
 gaps outer 2px
-
-# screenshot :3
-# Screenshots
-
+gaps inner 2px
 ## Clipboard Screenshots
 bindsym Prior exec --no-startup-id /bin/screenshot.sh
 bindsym Shift+Prior exec --no-startup-id /bin/screenshot-screen.sh
@@ -39,7 +36,6 @@ bindsym $mod+r mode "resize"
 # i3 config file (v4)
 
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
-
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -149,13 +145,13 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 " Browser" 
-set $ws2 " Terminals"
-set $ws3 " Discord"
-set $ws4 " Music"
-set $ws5 " File Explorer"
-set $ws6 " Games"
-set $ws7 " IDEs"
+set $ws1 "1:" 
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:"
+set $ws5 "5:"
+set $ws6 "6:"
+set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
@@ -175,20 +171,18 @@ bindsym $mod+0 workspace $ws10
 #stacking ratios
 
 #application and their workspaces :3
-assign [class="zen"] $ws1
-assign [class="Alacritty"] $ws2
+#assign [class="waterfox"] $ws1
+#assign [class="Alacritty"] $ws2
 assign [class="vesktop"] $ws3
 assign [class="Spotify"] $ws4
-assign [class="Thunar"] $ws5
-assign [class="steam"] $ws6
-assign [class="jetbrains-studio"] $ws7
-assign [class="code-oss"] $ws7
+#assign [class="Thunar"] $ws5
+assign [class="steam"] $ws5
+assign [class="jetbrains-studio"] $ws6
 
-exec zen-browser
-exec spotify-launcher
-exec alacritty
+exec --no-startup-id i3-msg 'workspace $ws1; exec waterfox'
+exec --no-startup-id i3-msg 'workspace $ws2; exec alacritty'
 exec vesktop
-exec thunar
+exec spotify-launcher
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -263,7 +257,7 @@ set $mantle #1e2030
 set $crust #181926
 
 # target                 title     bg    text   indicator  border
-client.focused           $lavender $base $text  $rosewater $lavender
+client.focused           $lavender $base $text  $rosewater $blue
 client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
 client.unfocused         $overlay0 $base $text  $rosewater $overlay0
 client.urgent            $peach    $base $peach $overlay0  $peach
@@ -271,8 +265,10 @@ client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
 client.background        $base
 
 # bar
-
 bar {
+    strip_workspace_numbers yes
+    workspace_min_width 55
+    tray_output none
     status_command /bin/i3status-rs ~/.config/i3status-rust/config.toml
     position top
   colors {
