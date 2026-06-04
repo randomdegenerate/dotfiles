@@ -2,8 +2,4 @@ require('plugins')
 require('configs')
 require('lsp')
 require('keymaps')
-
-
-
-
-
+require('autocmd')
