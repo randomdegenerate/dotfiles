@@ -1,18 +1,20 @@
-distro: cachyos
+distro: Arch(Cachyos)
 shell: fish
-WM : I3
-I3 THEME: CATPUCCIN MACCHIATO
+WM : I3wm
+bar: i3bar +i3status-rust
+I3 THEME: CATPUCCIN MOCHA LAVENDAR DARK
 Terminal : Alacritty
 Terminal Theme : cattpuccin
 compositor : picom
 Desktop Wallpaper : feh (Miku)
-additional stuff: dunst, redshift
-Desktop Font : JetBrains Mono NL
-Terminal Font : JetBrains Mono NL
+notifications: dunst
+additional: redshift,playerctl
+Desktop Font : JetBrains Mono Nerd Font / IosevkaTerm Nerd Font
+Terminal Font : IosevkaTerm Nerd Font
 Main text editor: Neovim
 Screenshots : xclip + maim
 file explorer : thunar
-music : spotify
-browser : librewolf
-discord : Vencord
+music : spotify + mpv
+browser : waterfox
+discord : vesktop
 
