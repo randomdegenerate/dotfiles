@@ -32,10 +32,10 @@ history = 10000
 multiplier = 3
 
 [font]
-size = 20
+size = 19
 
 [font.normal]
-family = "iosevka nerd font"
+family = "iosevkaterm nerd font"
 style = "regular"
 
 
