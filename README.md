@@ -1,22 +1,22 @@
-distro: Arch(Cachyos)
-shell: fish
-WM : I3wm
-bar: i3bar + i3status-rust
-I3 THEME: CATPUCCIN MOCHA LAVENDER DARK
-Terminal : Alacritty
-Terminal Theme : cattpuccin
-compositor : picom
-Desktop Wallpaper : feh (Miku)
-Cursor(GTK): MikuCat
-notifications: dunst
-additional: redshift,playerctl
-Desktop Font : JetBrains Mono Nerd Font / IosevkaTerm Nerd Font
-Terminal Font : IosevkaTerm Nerd Font
-Main text editor: Neovim
-Other text editors: vim + vscodium
-Screenshots : xclip + maim
-file explorer : thunar
-music : spotify + mpv
-browser : waterfox
-discord : vesktop
+# software for laptop
+- Distro: Arch(Cachyos)
+- shell: fish
+- WM : I3wm
+- bar: i3bar + i3status + python wrapper script for music block
+- Terminal : Alacritty
+- Terminal Theme : pride-colors
+- compositor : picom
+- Desktop Wallpaper : feh (Miku wallpaper of choice)
+- Cursor(GTK): MikuCat
+- notifications: dunst
+- additional: redshift, playerctl, sdkman, onlyoffice, nwg-look, nmtui, bluetui
+- Desktop Font : JetBrains Mono Nerd Font / Iosevka(Term) Nerd Font
+- Terminal Font : IosevkaTerm Nerd Font
+- Main text editor: Neovim
+- Other text editors: vim + vscodium
+- Screenshots : xclip + maim
+- file explorer : thunar
+- music : spotify-launcher, mpv
+- browser : firefox
+- discord : vesktop
 
