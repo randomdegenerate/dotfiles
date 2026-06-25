@@ -34,7 +34,11 @@ require('mini.pick').setup()
 require('lualine').setup {
   options = { theme = 'palenight' }
 }
-require('oil').setup()
+require('oil').setup({
+    view_options = {
+        show_hidden = false,
+    }
+})
 --require('colorizer').setup()
 require('luasnip.loaders.from_vscode').load { exclude = {}, }
 require('blink.cmp').setup({
