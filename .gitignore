@@ -1,0 +1,13 @@
+*
+
+
+!alacritty/
+!nvim/
+!i3status/
+!i3status-rust/
+!i3/
+!picom/
+!mpd/
+!rmpc/
+!i3blocks/
+!.gitignore
