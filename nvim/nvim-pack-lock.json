@@ -85,6 +85,10 @@
       "rev": "0698142cfe31deb3670d0930214e4cac103d46d5",
       "src": "https://github.com/ThePrimeagen/refactoring.nvim"
     },
+    "transparent.nvim": {
+      "rev": "e00ca1cf09caef575edf8da7e5a8b9193893b4c7",
+      "src": "https://github.com/xiyaowong/transparent.nvim"
+    },
     "vim-moonfly-colors": {
       "rev": "1c0a9994bb6bb5b43859c67924aabd061c4b7905",
       "src": "https://github.com/bluz71/vim-moonfly-colors"

@@ -23,22 +23,19 @@ vim.pack.add({
   { src = "https://github.com/lewis6991/async.nvim" },
   { src = "https://github.com/norcalli/nvim-colorizer.lua" },
   { src = "https://github.com/mfussenegger/nvim-dap" },
+  { src = "https://github.com/xiyaowong/transparent.nvim"},
 })
 
 -- THEMES
 -- catppuccin-macchiato/mocha
 -- nightfly
-vim.cmd("colorscheme emperor")
-
+vim.cmd("colorscheme catppuccin-mocha")
+require('transparent').setup({})
 require('mini.pick').setup()
 require('lualine').setup {
   options = { theme = 'palenight' }
 }
-require('oil').setup({
-    view_options = {
-        show_hidden = false,
-    }
-})
+require('oil').setup()
 --require('colorizer').setup()
 require('luasnip.loaders.from_vscode').load { exclude = {}, }
 require('blink.cmp').setup({
