@@ -12,7 +12,7 @@ cursor = "#6c3baa"
 
 [colors.selection]
 text = "#0d0f18"
-background = "#002a3a"
+background = "#000000"
 
 [colors.normal]
 black   = "#282828"

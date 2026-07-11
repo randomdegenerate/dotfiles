@@ -5,7 +5,7 @@
 # this file and re-run i3-config-wizard(1).
 #
 
-
+exec_always --no-startup-id ~/.config/i3/scripts/music-notify.sh
 exec_always --no-startup-id feh --bg-scale ~/.config/i3/MikuSpace.jpg
 exec --no-startup-id dunst
 exec --no-startup-id picom
@@ -16,7 +16,7 @@ exec --no-startup-id i3-auto-layout
 exec xrandr --output DisplayPort-0 --mode 1920x1080 --rate 165.00
 
 
-default_border pixel 2
+default_border pixel 4
 default_floating_border pixel 4
 
 gaps outer 4
@@ -47,8 +47,6 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 
-# on startup apps
-exec i3-sensible-terminal
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
@@ -61,8 +59,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Clipboard Screenshots
-bindsym Prior exec --no-startup-id ~/.config/i3/screenshot.sh
-bindsym Shift+Prior exec --no-startup-id ~/.config/i3/screenshot-screen.sh
+bindsym Prior exec --no-startup-id ~/.config/i3/scripts/screenshot.sh
+bindsym Shift+Prior exec --no-startup-id ~/.config/i3/scripts/screenshot-screen.sh
 
 # Media keys specified to spotify
 bindsym XF86AudioPlay exec playerctl -p spotify play-pause
@@ -209,7 +207,7 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-bindsym $mod+r mode "resize"
+bindsym $mod+r mode "resize"; exec --no-startup-id notify-send -r 9990 -u low -i view-fullscreen "Resize Mode" "Use ← ↑ ↓ → to resize\nPress Enter or Esc to exit"
 
 # mocha
 set $rosewater #f5e0dc

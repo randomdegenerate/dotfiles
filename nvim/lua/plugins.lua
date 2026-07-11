@@ -12,15 +12,12 @@ vim.pack.add({
   { src = "https://github.com/rafamadriz/friendly-snippets" },
   { src = "https://github.com/saghen/blink.cmp",                  version = vim.version.range('*'), "https://github.com/saghen/blink.lib" },
   { src = "https://github.com/mfussenegger/nvim-jdtls" },
-  { src = "https://github.com/folke/lazydev.nvim" },
   --
   { src = "https://github.com/norcalli/nvim-colorizer.lua" },
   { src = "https://github.com/nvim-lualine/lualine.nvim" },
   { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
   { src = "https://github.com/nvim-mini/mini.pick" },
   { src = "https://github.com/stevearc/oil.nvim" },
-  { src = "https://github.com/ThePrimeagen/refactoring.nvim" },
-  { src = "https://github.com/lewis6991/async.nvim" },
   { src = "https://github.com/norcalli/nvim-colorizer.lua" },
   { src = "https://github.com/mfussenegger/nvim-dap" },
   { src = "https://github.com/xiyaowong/transparent.nvim"},
@@ -30,13 +27,13 @@ vim.pack.add({
 -- catppuccin-macchiato/mocha
 -- nightfly
 vim.cmd("colorscheme catppuccin-mocha")
-require('transparent').setup({})
+require('transparent').setup()
 require('mini.pick').setup()
 require('lualine').setup {
   options = { theme = 'palenight' }
 }
 require('oil').setup()
---require('colorizer').setup()
+require('colorizer').setup()
 require('luasnip.loaders.from_vscode').load { exclude = {}, }
 require('blink.cmp').setup({
   fuzzy = { implementation = "prefer_rust_with_warning" },

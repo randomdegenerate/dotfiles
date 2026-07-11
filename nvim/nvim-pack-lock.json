@@ -4,10 +4,6 @@
       "rev": "a62e1083a3cfe8b6b206e7d3d33a51091df25357",
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
-    "async.nvim": {
-      "rev": "7a1d7d49933fbe902b84b55f352a3b10fd587331",
-      "src": "https://github.com/lewis6991/async.nvim"
-    },
     "black-metal-theme-neovim": {
       "rev": "d7ce1c4b9196b3b34e70ca4fa9af108bb4207818",
       "src": "https://github.com/metalelf0/black-metal-theme-neovim"
@@ -17,10 +13,6 @@
       "src": "https://github.com/saghen/blink.cmp",
       "version": ">=0.0.0"
     },
-    "compile-mode.nvim": {
-      "rev": "dd3e952076a33faba0a55b04b2b73945832c0527",
-      "src": "https://github.com/ej-shafran/compile-mode.nvim"
-    },
     "friendly-snippets": {
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "https://github.com/rafamadriz/friendly-snippets"
@@ -28,10 +20,6 @@
     "gruber-darker.nvim": {
       "rev": "aba065c3a79b58cc3863d5c9db319255abd1258a",
       "src": "https://github.com/blazkowolf/gruber-darker.nvim"
-    },
-    "lazydev.nvim": {
-      "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
-      "src": "https://github.com/folke/lazydev.nvim"
     },
     "lualine.nvim": {
       "rev": "a905eeebc4e63fdc48b5135d3bf8aea5618fb21c",
@@ -76,10 +64,6 @@
     "pack-manager.nvim": {
       "rev": "e947437ab03c2e20d7eb4e27d1a5f043a9ab1d72",
       "src": "https://github.com/mplusp/pack-manager.nvim"
-    },
-    "plenary.nvim": {
-      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
-      "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "refactoring.nvim": {
       "rev": "0698142cfe31deb3670d0930214e4cac103d46d5",
