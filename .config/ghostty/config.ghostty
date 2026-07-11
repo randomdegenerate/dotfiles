@@ -1,0 +1,10 @@
+theme = shades-of-purple-darker
+background-opacity = 0.8
+
+window-decoration = server
+
+keybind = ctrl+d=new_split:right
+
+font-family = "iosevka term"
+font-size = 16
+

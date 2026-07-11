@@ -1,0 +1,39 @@
+# Dark Pride - Alacritty TOML theme
+# Original author: apathyrecharge
+# License: GPLv3
+
+[colors.primary]
+background = "#0d0d1b"
+foreground = "#ccccce"
+
+[colors.cursor]
+text = "#0d0f18"
+cursor = "#6c3baa"
+
+[colors.selection]
+text = "#0d0f18"
+background = "#000000"
+
+[colors.normal]
+black   = "#282828"
+red     = "#ca1444"
+green   = "#789aba"
+yellow  = "#b3879f"
+blue    = "#94469b"
+magenta = "#cb6fa1"
+cyan    = "#fb6e93"
+white   = "#cf98c1"
+
+[colors.bright]
+black   = "#98218e"
+red     = "#cb515d"
+green   = "#5a87b1"
+yellow  = "#9c61ab"
+blue    = "#9a77b1"
+magenta = "#f2a297"
+cyan    = "#f4436f"
+white   = "#ebdbb2"
+
+# Optional window/tab styling equivalents
+[window]
+opacity = 0.6
