@@ -5,6 +5,6 @@ window-decoration = server
 
 keybind = ctrl+d=new_split:right
 
-font-family = "iosevka term"
+font-family = "iosevka"
 font-size = 16
 
