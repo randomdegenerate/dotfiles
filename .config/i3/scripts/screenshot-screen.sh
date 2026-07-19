@@ -5,7 +5,7 @@ mkdir -p "$dir"
 
 file="$dir/screenshot-$(date +%Y%m%d-%H%M%S).png"
 
-if /usr/bin/maim "$file"; then
-    /usr/bin/xclip -selection clipboard -t image/png -i "$file"
-    /usr/bin/notify-send -u low -t 2000 -i "$file" "Screen screenshot saved"
+if maim "$file"; then
+    xclip -selection clipboard -t image/png -i "$file"
+    notify-send -u low -t 2000 -i "$file" "Screen screenshot saved"
 fi

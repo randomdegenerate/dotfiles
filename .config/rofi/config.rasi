@@ -1,3 +1,4 @@
-@import "/usr/share/rofi/themes/solarized_alternate.rasi"
 
-@theme "/usr/share/rofi/themes/DarkBlue.rasi"
+//@theme "/usr/share/rofi/themes/DarkBlue.rasi"
+
+@theme "/nix/store/smag1avi30y14xhc4k631hpkr4ypx6dw-rofi-2.0.0/share/rofi/themes/DarkBlue.rasi"

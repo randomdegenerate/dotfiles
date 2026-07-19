@@ -26,8 +26,8 @@ vim.pack.add({
 -- THEMES
 -- catppuccin-macchiato/mocha
 -- nightfly
-vim.cmd("colorscheme catppuccin-mocha")
-require('transparent').setup()
+vim.cmd("colorscheme catppuccin-nvim")
+require('transparent').setup({})
 require('mini.pick').setup()
 require('lualine').setup {
   options = { theme = 'palenight' }
