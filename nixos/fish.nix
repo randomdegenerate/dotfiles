@@ -4,6 +4,7 @@
 	programs.fish = {
 		enable = true;
 		shellAliases = {
+            svi="sudoedit";
 			# developer aliases
 			nix-shell="nix-shell --run $SHELL";
 			## Useful aliases

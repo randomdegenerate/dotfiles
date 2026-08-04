@@ -3,7 +3,9 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 { config, lib, pkgs, ... }:
-
+let
+  nix-gaming = import (builtins.fetchTarball "https://github.com/fufexan/nix-gaming/archive/master.tar.gz");
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -11,7 +13,13 @@
       ./fish.nix
     ];
   # enable experimentla features for dev stuff
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix.settings = {
+        # enable experimental features
+        experimental-features = [ "nix-command" "flakes" ];
+        # nix-gaming stuff also adds osu stable!
+        substituters = ["https://nix-gaming.cachix.org"];
+        trusted-public-keys = ["nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="];
+  };
   nixpkgs.config.allowUnfree = true;
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -47,8 +55,21 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-
+  xdg.portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+      ];
+  };
+  xdg.mime = {
+      enable = true;
+      defaultApplications = {
+        "inode/directory" = "thunar.desktop"; # replace with your file explorer
+        "text/html" = "firefox.desktop"; # Replace with your browser
+        "x-scheme-handler/http" = "firefox.desktop";
+        "x-scheme-handler/https" = "firefox.desktop";
+      };
+  };
   # Configure keymap in X11
   services.xserver.xkb.layout = "us";
   # desktop environment
@@ -64,8 +85,10 @@
 		i3status
 		feh
 		xclip
+        xsel
 		maim
 		slop
+        xdotool
 		rofi
 		polybar
 	];
@@ -77,7 +100,14 @@
   #enable sound
   services.pipewire = {
    	enable = true;
-   	pulse.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+ };
+
+  services.dunst = {
+    enable = true;
+    enableX11 = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -87,32 +117,36 @@
   users.users.sandil = {
    	isNormalUser = true;
 	extraGroups = [ "wheel" "networkmanager" "docker" "audio" ]; # Enable ‘sudo’ for the user.
-  	packages = with pkgs; [
-        vscodium
-		spotify
-		osu-lazer-bin
-		vesktop
-		clang
-		typescript
-		typescript-language-server
-		lua
-		lua-language-server
-		jdk21
-		jdt-language-server
-		(prismlauncher.override {
-		    # Add binary required by some mod
-		    additionalPrograms = [ ffmpeg ];
+    packages =
+        with pkgs;
+        with nix-gaming.packages.${pkgs.stdenv.hostPlatform.system};
+        [
+            wine
+            osu-stable osu-lazer-bin
+            (prismlauncher.override {
+            # Add binary required by some mod
+            additionalPrograms = [ ffmpeg ];
+            # Change Java runtimes available to Prism Launcher
+            jdks = [
+              graalvmPackages.graalvm-ce
+              zulu8
+              zulu17
+              zulu
+            ];
+            })
+        ];
 
-		    # Change Java runtimes available to Prism Launcher
-		    jdks = [
-		      graalvmPackages.graalvm-ce
-		      zulu8
-		      zulu17
-		      zulu
-		    ];
-	    	})
-	];
 	shell = pkgs.fish;
+  };
+
+  users.users.work = {
+    isNormalUser = true;
+    description = "User isolated specifically for work sessions";
+    extraGroups = [ "wheel" "networkmanager" "docker" "audio" ];
+    packages = with pkgs;
+    [
+        emacs
+    ];
   };
   virtualisation.docker = {
   	enable = true;
@@ -146,6 +180,7 @@
       obs-vkcapture
     ];
   };
+
   services.picom.enable = true;
   services.gvfs.enable = true; # Mount, trash, and other functionalities
   services.tumbler.enable = true; # Thumbnail support for images
@@ -158,17 +193,24 @@
       flavor = "mocha";
       accent = "mauve";
     })
-  	xdotool
-  	vim
-	ghostty
-	fzf
-	libsecret
-	playerctl
-	mpd
-	rmpc
-	mpv
-
+    vesktop
+    easyeffects
+    zenity
+    xdg-utils
+    clang
+    jdk21
+    vscodium
+    spotify
+    vim
+    ghostty
+    fzf
+    libsecret
+    playerctl
+    mpd
+    rmpc
+    mpv
   ];
+
   fonts.packages = with pkgs; [
   noto-fonts
   noto-fonts-cjk-sans
