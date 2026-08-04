@@ -5,14 +5,14 @@
 # this file and re-run i3-config-wizard(1).
 #
 
-exec_always --no-startup-id feh --bg-scale ~/.config/i3/MikuSpace.jpg
+exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id dunst
 exec --no-startup-id picom
 exec --no-startup-id redshift
 exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1exec
-exec xrandr --output DisplayPort-0 --mode 1920x1080 --rate 165.00
-
+exec xrandr --output DP-1 --mode 1920x1080 --rate 165.00
+exec xrandr --output HDMI-1 --mode 1920x1080 --rate 60.00 --rotate right
 
 default_border pixel 4
 default_floating_border pixel 4
@@ -184,10 +184,10 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window‚Äôs width.
-        # Pressing right will grow the window‚Äôs width.
-        # Pressing up will shrink the window‚Äôs height.
-        # Pressing down will grow the window‚Äôs height.
+        # Pressing left will shrink the windowøs width.
+        # Pressing right will grow the windowøs width.
+        # Pressing up will shrink the windowøs height.
+        # Pressing down will grow the windowøs height.
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
         bindsym l resize shrink height 10 px or 10 ppt
@@ -205,7 +205,7 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-bindsym $mod+r mode "resize"; exec --no-startup-id notify-send -r 9990 -u low -i view-fullscreen "Resize Mode" "Use ‚Üê ‚Üë ‚Üì ‚Üí to resize\nPress Enter or Esc to exit"
+bindsym $mod+r mode "resize"; exec --no-startup-id notify-send -r 9990 -u low -i view-fullscreen "Resize Mode" "Use ø ø ø ø to resize\nPress Enter or Esc to exit"
 
 # mocha
 set $rosewater #f5e0dc
