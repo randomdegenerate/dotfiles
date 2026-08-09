@@ -1,3 +1,11 @@
+vim.lsp.config("astro", {
+    init_options = {
+        typescript = {
+            tsdk = vim.env.TSSDK,
+        },
+    },
+})
+
 vim.lsp.enable({
     'lua_ls',
     'clangd',
@@ -8,6 +16,8 @@ vim.lsp.enable({
     'kotlin_lsp',
     'jsonls',
     'yamlls',
+    'astro',
+    'nixd',
 })
 
 vim.diagnostic.config({
