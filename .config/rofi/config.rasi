@@ -1,4 +1,6 @@
 
 
 
-@theme "./Arc-Dark.rasi"
+//@theme "./Arc-Dark.rasi"
+
+@theme "/nix/store/qw7zhd0d8i0yzfx3fj5q44964dqcyg4r-rofi-2.0.0/share/rofi/themes/DarkBlue.rasi"

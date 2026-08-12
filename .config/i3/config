@@ -29,6 +29,9 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango:jetbrainsmononerdfont 14
 
+#make feh floating window
+for_window [class="feh"] floating enable, move position left
+
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
@@ -59,7 +62,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Clipboard Screenshots
 bindsym Prior exec --no-startup-id ~/.config/i3/scripts/screenshot.sh
 bindsym Shift+Prior exec --no-startup-id ~/.config/i3/scripts/screenshot-screen.sh
-
+bindsym $mod+backslash exec --no-startup-id "find ~/Pictures -type f -exec ls -t1 {} + | head -1 | xargs feh"
 # Media keys specified to spotify
 bindsym XF86AudioPlay exec playerctl -p spotify play-pause
 bindsym XF86AudioNext  exec playerctl -p spotify next

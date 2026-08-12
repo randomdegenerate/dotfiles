@@ -1,3 +1,6 @@
+[general]
+import = ["~/.config/alacritty/themes/noctalia.toml"]
+
 general.import = [
         # color themes
         #"~/.config/alacritty/github-dark-high-contrast.toml"
