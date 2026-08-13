@@ -1,6 +1,7 @@
 ```
 # Assuming u have a fresh nixos install
-# inject required dependencies to install and setup configuration into shell
+
+# temporarly inject required dependencies to install and setup configuration into a new shell
 nix-shell -p git stow
 # clone rep and go into the folder
 git clone https://github.com/randomdegenerate/dotfiles/
@@ -11,5 +12,8 @@ sudo cp /etc/nixos/hardware-configuration.nix ./nixsystem/nixos/hardware-configu
 stow .
 # rebuild system with my system config's flake name
 sudo nixos-rebuild switch ~/nixsystem/#GumiTeto
+# exit nix shell
+exit
+
 # now you have my jank ass setup(WIP)
 ```
