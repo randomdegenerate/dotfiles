@@ -1,5 +1,13 @@
-{ inputs, config, pkgs, ... }:
-
+{ inputs, lib, config, pkgs, ... }:
+with lib; let
+  hyprPluginPkgs = inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
+  hypr-plugin-dir = pkgs.symlinkJoin {
+    name = "hyprland-plugins";
+    paths = with hyprPluginPkgs; [
+        inputs.hy3.packages.${pkgs.stdenv.hostPlatform.system}.hy3
+    ];
+  };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -77,7 +85,6 @@
       enable = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
-        xdg-desktop-portal-hyprland
       ];
   };
 
@@ -103,6 +110,8 @@
     enable = true;
     withUWSM = true;
     xwayland.enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage = pkgs.xdg-desktop-portal-hyprland;
  };
 
  programs.noctalia = {
@@ -117,7 +126,7 @@
   # Full declarative greeter.toml (overwritten each activation). See examples/greeter.toml.
   settings = {
     cursor = {
-      theme = "catppuccin-mocha-mauve";
+      theme = "catppuccin-mocha-mauve-cursors";
       size = 24;
       path = "${pkgs.catppuccin-cursors.mochaMauve}/share/icons";
     };
@@ -127,6 +136,7 @@
 programs.hyprlock.enable = true;
 
  environment.sessionVariables = {
+    HYPR_PLUGIN_DIR = hypr-plugin-dir;
     NIXOS_OZONE_WL = "1";
     TSSDK = "${pkgs.typescript}/lib/node_modules/typescript/lib";
  };
@@ -259,10 +269,11 @@ programs.hyprlock.enable = true;
     grim # xclip
     slurp # maim
     wl-clipboard # xsel
-
+    #hyprland plugins
+    inputs.hyprmod.packages.${pkgs.stdenv.hostPlatform.system}.default
     #cursors
-    # catppuccin-cursors
-
+    catppuccin-cursors
+    evtest
     btop
     cava
     tmux

@@ -54,6 +54,8 @@ local menu        = "noctalia msg panel-toggle launcher"
 --
  hl.on("hyprland.start", function ()
     hl.exec_cmd("noctalia")
+    hl.exec_cmd('hyprctl plugin load "$HYPR_PLUGIN_DIR/lib/libhy3.so"');
+    hl.exec_cmd('hyprctl plugin load "$HYPR_PLUGIN_DIR/lib/libhyprmod.so"');
     hl.exec_cmd("nm-applet")
     hl.exec_cmd("hyprpaper & firefox")
  end)
@@ -65,6 +67,7 @@ local menu        = "noctalia msg panel-toggle launcher"
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
 
+hl.env("HYPRCURSOR_THEME", "catppuccin-mocha-mauve-cursors");
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 
@@ -85,7 +88,7 @@ hl.env("HYPRCURSOR_SIZE", "24")
 
  hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
  hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
- -- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
+ hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
 
 
 -----------------------
@@ -216,7 +219,7 @@ hl.config({
 hl.config({
     misc = {
         force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+        disable_hyprland_logo   = true, -- If true disables the random hyprland logo / anime girl background. :(
     },
 })
 
@@ -276,6 +279,9 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 -- this works different from i3wm
 hl.bind(mainMod .. " + E", hl.dsp.layout("togglesplit"))    -- dwindle only
 
+hl.bind("page_up", hl.dsp.exec_cmd("noctalia msg screenshot-region"))
+hl.bind("SHIFT + page_up", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen pick"))
+hl.bind("CTRL + page_up", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen all"))
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + H",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
