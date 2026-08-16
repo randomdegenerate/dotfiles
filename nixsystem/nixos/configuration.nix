@@ -25,9 +25,9 @@ in
   nix.settings = {
     # enable experimental features
     experimental-features = [ "nix-command" "flakes" ];
-
     # nix-gaming cachix bins
-    substituters = ["https://nix-gaming.cachix.org" "https://noctalia.cachix.org"];
+    substituters = ["https://nix-gaming.cachix.org" "https://noctalia.cachix.org" "https://hyprland.cachix.org"];
+    trusted-substituters = ["https://hyprland.cachix.org"];
     trusted-public-keys = ["nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="];
   };
 
@@ -44,6 +44,9 @@ in
     # Mchose Ace68/60
     SUBSYSTEM=="hidraw", ATTRS{idVendor}=="41e4", MODE="0660", TAG+="uaccess"
     SUBSYSTEMS=="usb*", ATTRS{idVendor}=="41e4", MODE="0660", TAG+="uaccess"
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="320f", ATTRS{idProduct}=="5088", MODE="0666", TAG+="uaccess"
+    SUBSYSTEMS=="usb*", ATTRS{idVendor}=="320f", MODE="0660", TAG+="uaccess"
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="320f", ATTRS{idProduct}=="5055", MODE="0666", TAG+="uaccess"
   '';
 
   # Use the systemd-boot EFI boot loader.
@@ -64,6 +67,29 @@ in
   programs.nm-applet.enable = true;
   services.tuned.enable = true;
   services.upower.enable = true;
+
+  hardware.bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = {
+            General = {
+              # Shows battery charge of connected devices on supported
+              # Bluetooth adapters. Defaults to 'false'.
+              Experimental = true;
+              # When enabled other devices can connect faster to us, however
+              # the tradeoff is increased power consumption. Defaults to
+              # 'false'.
+              FastConnectable = true;
+            };
+            Policy = {
+              # Enable all controllers when they are found. This includes
+              # adapters present on start as well as adapters that are plugged
+              # in later on. Defaults to 'true'.
+              AutoEnable = true;
+            };
+        };
+    };
+  services.blueman.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Dublin";
@@ -140,7 +166,6 @@ programs.hyprlock.enable = true;
     NIXOS_OZONE_WL = "1";
     TSSDK = "${pkgs.typescript}/lib/node_modules/typescript/lib";
  };
-
  console.keyMap = "us";
  # desktop environment
  # services.xserver.enable = true;
@@ -264,15 +289,19 @@ programs.hyprlock.enable = true;
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
+    yazi
     wofi # rofi
     # waybar # polybar
     grim # xclip
     slurp # maim
     wl-clipboard # xsel
+    nwg-look
     #hyprland plugins
-    inputs.hyprmod.packages.${pkgs.stdenv.hostPlatform.system}.default
+    hyprland-protocols
     #cursors
+    hyprcursor
     catppuccin-cursors
+
     evtest
     btop
     cava
@@ -298,13 +327,18 @@ programs.hyprlock.enable = true;
     zellij
     psmisc
     gh
+    rustcat
 
     #languages and lsp
     clang
     jdk21
+    nodejs_24
     lua
     python3
     typescript
+    zig
+    rustc
+
     astro-language-server
     pyright
     lua-language-server

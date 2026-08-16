@@ -4,6 +4,12 @@
   inputs = {
     #nixpkgs repo
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     #osu stable stuff
     nix-gaming.url = "github:fufexan/nix-gaming";
 
@@ -23,6 +29,7 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+
     # hyprland plugins
     hy3 = {
       url = "github:outfoxxed/hy3";
@@ -31,10 +38,6 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    hyprmod = {
-        url = "github:BlueManCZ/hyprmod";
-        inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {self, nixpkgs, ...}@inputs :

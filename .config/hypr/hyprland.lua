@@ -1,3 +1,43 @@
+local hy3 = hl.plugin.hy3
+
+hl.config({
+    plugin = {
+        hy3 = {
+            tabs = {
+                text_height = 12,
+                height = 24,
+                text_font = "noto sans mono semi-bold",
+                colors = {
+                     -- Active
+                    active = "rgba(cba6f740)",
+                    active_border = "rgba(cba6f7ff)",
+                    active_text = "rgba(ffffffff)",
+
+                    -- Focused
+                    focused = "rgba(cba6f740)",
+                    focused_border = "rgba(cba6f7ff)",
+                    focused_text = "rgba(ffffffff)",
+
+                    -- Inactive
+                    inactive = "rgba(313244ff)",
+                    inactive_border = "rgba(313244ff)",
+                    inactive_text = "rgba(ffffffff)",
+
+                    -- Urgent
+                    urgent = "rgba(f38ba840)",
+                    urgent_border = "rgba(f38ba8ff)",
+                    urgent_text = "rgba(1e1e2eff)",
+
+                    -- Locked
+                    locked = "rgba(f9e2af40)",
+                    locked_border = "rgba(f9e2afff)",
+                    locked_text = "rgba(1e1e2eff)",
+                },
+            },
+        },
+    },
+})
+
 -- This is an example Hyprland Lua config file.
 -- Refer to the wiki for more information.
 -- https://wiki.hypr.land/Configuring/Start/
@@ -46,7 +86,6 @@ local menu        = "noctalia msg panel-toggle launcher"
 -------------------
 ---- AUTOSTART ----
 -------------------
-
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
@@ -54,8 +93,7 @@ local menu        = "noctalia msg panel-toggle launcher"
 --
  hl.on("hyprland.start", function ()
     hl.exec_cmd("noctalia")
-    hl.exec_cmd('hyprctl plugin load "$HYPR_PLUGIN_DIR/lib/libhy3.so"');
-    hl.exec_cmd('hyprctl plugin load "$HYPR_PLUGIN_DIR/lib/libhyprmod.so"');
+    hl.exec_cmd('hyprctl plugin load "$HYPR_PLUGIN_DIR/lib/libhy3.so"')
     hl.exec_cmd("nm-applet")
     hl.exec_cmd("hyprpaper & firefox")
  end)
@@ -65,11 +103,10 @@ local menu        = "noctalia msg panel-toggle launcher"
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
 
--- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
-
-hl.env("HYPRCURSOR_THEME", "catppuccin-mocha-mauve-cursors");
-hl.env("XCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_THEME", "MikuCat")
 hl.env("HYPRCURSOR_SIZE", "24")
+
+-- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
 
 
 -----------------------
@@ -82,13 +119,15 @@ hl.env("HYPRCURSOR_SIZE", "24")
 
  hl.config({
    ecosystem = {
-     enforce_permissions = true,
+     enforce_permissions = false,
    },
  })
 
- hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
+ hl.permission("/usr/(lib|libexec|lib64)/grim", "screencopy", "allow")
  hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
+ hl.permission({ binary = "/nix/store/[a-z0-9]{32}-grim-[0-9.]*/bin/grim", type = "screencopy", mode = "allow" })
+ hl.permission({ binary = "/nix/store/[a-z0-9]{32}-xdg-desktop-portal-hyprland-[0-9.]*/libexec/.xdg-desktop-portal-hyprland-wrapped", type = "screencopy", mode = "allow" })
+ hl.permission("/usr/(lib/libexec/lib64)/hyprpm", "plugin", "allow")
 
 
 -----------------------
@@ -104,7 +143,7 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
+            active_border= { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
             inactive_border = "rgba(595959aa)",
         },
 
@@ -114,7 +153,7 @@ hl.config({
         -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
         allow_tearing = false,
 
-        layout = "dwindle",
+        layout = "hy3",
     },
 
     decoration = {
@@ -141,7 +180,7 @@ hl.config({
     },
 
     animations = {
-        enabled = true,
+        enabled = false,
     },
 })
 
@@ -267,26 +306,90 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("firefox"))
+-- hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("firefox"))
 local closeWindowBind = hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 -- hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(menu))
 -- find out what this means
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
--- this works different from i3wm
-hl.bind(mainMod .. " + E", hl.dsp.layout("togglesplit"))    -- dwindle only
+
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({action = "toggle"}))
 
 hl.bind("page_up", hl.dsp.exec_cmd("noctalia msg screenshot-region"))
 hl.bind("SHIFT + page_up", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen pick"))
 hl.bind("CTRL + page_up", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen all"))
--- Move focus with mainMod + arrow keys
-hl.bind(mainMod .. " + H",  hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + K",    hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + J",  hl.dsp.focus({ direction = "down" }))
+
+-- ============================================================
+-- i3 DEFAULT KEYBINDS — hy3 equivalents
+-- ============================================================
+
+-- Focus direction
+-- i3: $mod+h / j / k / l
+hl.bind("SUPER + H", hy3.move_focus("l"))
+hl.bind("SUPER + J", hy3.move_focus("d"))
+hl.bind("SUPER + K", hy3.move_focus("u"))
+hl.bind("SUPER + L", hy3.move_focus("r"))
+
+
+-- Move container
+-- i3: $mod+Shift+h / j / k / l
+hl.bind("SUPER + SHIFT + H", hy3.move_window("l"))
+hl.bind("SUPER + SHIFT + J", hy3.move_window("d"))
+hl.bind("SUPER + SHIFT + K", hy3.move_window("u"))
+hl.bind("SUPER + SHIFT + L", hy3.move_window("r"))
+
+
+-- Split horizontal
+-- i3: $mod+h
+-- hy3: make a horizontal group
+--
+-- NOTE: conflicts with i3's focus-left binding.
+-- Therefore this i3 command is intentionally NOT bound.
+
+
+-- Split vertical
+-- i3: $mod+v
+-- hy3: make a vertical group
+hl.bind("SUPER + V", hy3.make_group("v"))
+
+
+-- Tabbed layout
+-- i3: $mod+w
+-- hy3: create a tabbed group
+hl.bind("SUPER + W", hy3.make_group("tab"))
+
+hl.bind("SUPER + SHIFT + W", hy3.change_group("toggletab"))
+
+
+-- Toggle split orientation
+-- i3: $mod+e
+-- hy3: change the current group's orientation
+hl.bind("SUPER + E", hy3.change_group("opposite"))
+
+
+-- Toggle floating/tiled focus
+-- i3: $mod+space
+-- hy3 equivalent
+hl.bind("SUPER + SPACE", hy3.toggle_focus_layer())
+
+
+-- Focus parent
+-- i3: $mod+a
+-- hy3 equivalent
+hl.bind("SUPER + a", hy3.change_focus("raise"))
+
+-- Focus child
+-- i3: $mod+d
+-- hy3 equivalent
+hl.bind("SUPER + d", hy3.change_focus("lower"))
+
+
+-- Tab navigation
+-- hy3-specific dispatcher; no direct i3 default equivalent
+-- intentionally NOT included.
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
@@ -335,9 +438,7 @@ local suppressMaximizeRule = hl.window_rule({
     -- Ignore maximize requests from all apps. You'll probably like this.
     name  = "suppress-maximize-events",
     match = { class = ".*" },
-
-    suppress_event = "maximize",
-})
+suppress_event = "maximize", })
 -- suppressMaximizeRule:set_enabled(false)
 
 hl.window_rule({
