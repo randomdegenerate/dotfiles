@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
 	programs.fish = {
@@ -7,6 +7,7 @@
             nixconfig="sudoedit /etc/nixos/configuration.nix";
 			# developer aliases
 			nix-shell="nix-shell --run $SHELL";
+            "nix develop"="nix develope --command $SHELL";
 			## Useful aliases
 			# Replace ls with eza
 			ls="eza -al --color=always --group-directories-first --icons=always"; # preferred listing
