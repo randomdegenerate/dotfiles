@@ -1,6 +1,24 @@
 { pkgs, ... }:
 
 {
+
+
+    # sway
+    programs.sway = {
+        enable = true;
+        package = pkgs.swayfx;
+        xwayland.enable = true;
+        wrapperFeatures.gtk = true;
+        extraPackages = with pkgs; [
+            wofi # rofi
+            grim # xclip
+            slurp # maim
+            wl-clipboard #clipboard support for wayland
+            sway-contrib.grimshot #screenshot tool
+            i3status-rust
+        ];
+    };
+
     programs.firefox.enable = true;
     programs.steam = {
 	    enable = true;
@@ -25,10 +43,9 @@
         thunar-archive-plugin
         thunar-volman
     ];
-
-
     services.gvfs.enable = true; # Mount, trash, and other functionalities
     services.tumbler.enable = true; # Thumbnail support for images
+
     programs.obs-studio = {
         enable = true;
         enableVirtualCamera = true;
@@ -43,45 +60,30 @@
         ];
     };
 
-    # dev stuff kinda
-    virtualisation.docker = {
-      enable = true;
-    };
 
-    virtualisation.virtualbox.host.enable = true;
-
-    services.mysql = {
-        enable = true;
-        package = pkgs.mariadb;
-    };
     # --------------------------
-    # drawing tablet support
-    hardware.opentabletdriver.enable = true;
-    services.libinput.enable = true;
+
 
 
     environment.systemPackages = with pkgs; [
-            wofi # rofi
-            grim # xclip
-            slurp # maim
-            wl-clipboard
-            hyprland-protocols
-            xdg-utils
+
             #cursors
-            hyprcursor catppuccin-cursors
+            catppuccin-cursors
             # settings gui
             nwg-look pavucontrol easyeffects
-            #iruin webcam
             #tui tools
             btop fzf vim yazi mpv
             #utilities
-            libsecret psmisc playerctl zenity mpd unzip zip usbutils stow curl
+            libsecret psmisc playerctl zenity mpd
+            unzip zip usbutils stow curl xdg-utils
+            sbctl
             # misc tui
             cava evtest ani-cli rmpc fastfetch
 
             #terminals
             ghostty
 
+            #discord!
             vesktop
     ];
 
