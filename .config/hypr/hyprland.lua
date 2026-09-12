@@ -63,7 +63,7 @@ hl.monitor({
 })
 
 hl.monitor({
-    output   = "HDMI-A-3",
+    output   = "HDMI-A-1",
     mode     = "1920x1080@165",
     position = "0x0",
     scale    = "auto",
@@ -94,6 +94,8 @@ local menu        = "noctalia msg panel-toggle launcher"
 hl.on("hyprland.start", function()
     hl.exec_cmd("noctalia")
     hl.exec_cmd('hyprctl plugin load "$HYPR_PLUGIN_DIR/lib/libhy3.so"')
+    hl.exec_cmd("/home/sandil/.config/hypr/scripts/capslock-sound.sh")
+    hl.exec_cmd("otd-daemon")
     hl.exec_cmd("nm-applet")
     hl.exec_cmd("hyprpaper & firefox")
 end)
@@ -313,6 +315,8 @@ hl.device({
 ---- KEYBINDINGS ----
 ---------------------
 
+
+
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
@@ -337,6 +341,7 @@ hl.bind("CTRL + page_up", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen al
 -- ============================================================
 -- i3 DEFAULT KEYBINDS — hy3 equivalents
 -- ============================================================
+
 
 -- Focus direction
 -- i3: $mod+h / j / k / l

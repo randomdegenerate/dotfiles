@@ -7,28 +7,24 @@ with lib; let
         inputs.hy3.packages.${pkgs.stdenv.hostPlatform.system}.hy3
     ];
   };
+  pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
-      #hardware config(system specific)
+    [
       ./hardware-configuration.nix
-      #systemwide packages that arent related to the desktop environment or something or the other
       ./system-packages.nix
-      # extra imports for the shells i like cause idk
+      ./users.nix
       ./fish.nix
-      # nocatlia default packages from flake inputs
       inputs.noctalia.nixosModules.default
       inputs.noctalia-greeter.nixosModules.default
     ];
     # enable experimentla features for dev stuff
 
   nixpkgs.config.allowUnfree = true;
+
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
-    substituters = ["https://nix-gaming.cachix.org" "https://noctalia.cachix.org" "https://hyprland.cachix.org"];
-    trusted-substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="];
   };
 
   nix.gc = {
@@ -37,6 +33,13 @@ in
     options = "--delete-older-than 7d";
   };
 
+  hardware.graphics = {
+    package = pkgs-unstable.mesa;
+
+    # if you also want 32-bit support (e.g for Steam)
+    enable32Bit = true;
+    package32 = pkgs-unstable.pkgsi686Linux.mesa;
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -48,9 +51,11 @@ in
 	    options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
 	  '';
   };
+
   environment.sessionVariables = {
     HYPR_PLUGIN_DIR = hypr-plugin-dir;
-    NIXOS_OZONE_WL = "1";
+    NIXOS_OZONE_WL= "1";
+    ELECTRON_OZONE_PLATFORM_HINT= "AUTO";
     TSSDK = "${pkgs.typescript}/lib/node_modules/typescript/lib";
   };
 
@@ -79,16 +84,24 @@ in
   #defualt keymap setting
   console.keyMap = "us";
   #xdg setup
-  xdg.portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-      ];
+  xdg = {
+         portal = {
+          enable = true;
+          xdgOpenUsePortal = true;
+          config = {
+            common.default = ["gtk"];
+            hyprland.default = ["gtk" "hyprland"];
+          };
+          extraPortals = [
+            pkgs.xdg-desktop-portal-gtk
+          ];
+        };
   };
+
   xdg.mime = {
       enable = true;
       defaultApplications = {
-        # "inode/directory" = "thunar.desktop"; # replace with your file explorer
+        "inode/directory" = "thunar.desktop"; # replace with your file explorer
         "text/html" = "firefox.desktop"; # Replace with your browser
         "x-scheme-handler/http" = "firefox.desktop";
         "x-scheme-handler/https" = "firefox.desktop";
@@ -102,13 +115,15 @@ in
     withUWSM = true;
     xwayland.enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage = pkgs.xdg-desktop-portal-hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
    programs.noctalia = {
+
     enable = true;
     recommendedServices.enable = true;
    };
+
    programs.noctalia-greeter = {
     enable = true;
     greeter-args = "";
@@ -120,14 +135,14 @@ in
         };
     };
   };
+
   programs.hyprlock.enable = true;
 
-
-  # SERVICES
+  # power services
   services.tuned.enable = true;
   services.upower.enable = true;
 
-  #enable sound
+  # sound
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true; # if not already enabled
@@ -143,21 +158,23 @@ in
     enable = true;
     enableX11 = true;
   };
+
   services.flatpak.enable = true;
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
+
+
+  services.gnome.gnome-keyring.enable = true;
+  programs.gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
   };
-  services.libinput.enable = true;
 
   #x11 keyboard specification
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
-  services.gnome.gnome-keyring.enable = true; # save passwords
-  services.gvfs.enable = true; # Mount, trash, and other functionalities
-  services.tumbler.enable = true; # Thumbnail support for images
+
+  services.onedrive.enable = true;
   services.openssh.enable = true;
   services.udev.extraRules = ''
     # Mchose Ace68/60
@@ -168,40 +185,6 @@ in
     SUBSYSTEM=="hidraw", ATTRS{idVendor}=="320f", ATTRS{idProduct}=="5055", MODE="0666", TAG+="uaccess"
   '';
 
-  virtualisation.docker = {
-  	enable = true;
-  };
-  #virtual machines
-  virtualisation.virtualbox.host.enable = true;
-
-  # Users
-  users.users.sandil = {
-   	isNormalUser = true;
-	extraGroups = [ "wheel" "networkmanager" "docker" "audio" ]; # Enable ‘sudo’ for the user.
-    packages =
-        with pkgs;
-        [
-            inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.osu-stable
-            osu-lazer-bin
-            mysql-workbench
-            obsidian
-            ungoogled-chromium
-            (prismlauncher.override {
-            # Add binary required by some mod
-            additionalPrograms = [ ffmpeg ];
-            # Change Java runtimes available to Prism Launcher
-            jdks = [
-              graalvmPackages.graalvm-ce
-              zulu8
-              zulu17
-              zulu
-            ];
-            })
-        ];
-
-	shell = pkgs.fish;
-  };
-  users.extraGroups.vboxusers.members = [ "sandil" ];
 
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "26.05"; # Did you read the comment?

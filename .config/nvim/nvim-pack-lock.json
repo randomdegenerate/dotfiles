@@ -21,6 +21,14 @@
       "rev": "aba065c3a79b58cc3863d5c9db319255abd1258a",
       "src": "https://github.com/blazkowolf/gruber-darker.nvim"
     },
+    "lavender.nvim": {
+      "rev": "bbb7c04952378d5430521206d42c48dcc413ac1e",
+      "src": "https://codeberg.org/jthvai/lavender.nvim"
+    },
+    "live-preview.nvim": {
+      "rev": "a6307fa340ed7c0d96f5c567afc8c991aad94ce0",
+      "src": "https://github.com/brianhuster/live-preview.nvim"
+    },
     "lualine.nvim": {
       "rev": "a905eeebc4e63fdc48b5135d3bf8aea5618fb21c",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
@@ -68,6 +76,10 @@
     "refactoring.nvim": {
       "rev": "0698142cfe31deb3670d0930214e4cac103d46d5",
       "src": "https://github.com/ThePrimeagen/refactoring.nvim"
+    },
+    "render-markdown.nvim": {
+      "rev": "4663eb3ecd538bd5062628fb6d95bbe6bdca78f6",
+      "src": "https://github.com/meanderingprogrammer/render-markdown.nvim"
     },
     "transparent.nvim": {
       "rev": "e00ca1cf09caef575edf8da7e5a8b9193893b4c7",

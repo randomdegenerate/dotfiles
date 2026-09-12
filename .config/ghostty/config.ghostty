@@ -5,6 +5,6 @@ window-decoration = server
 
 keybind = ctrl+d=new_split:right
 
-font-family = "iosevka"
+font-family = "jetBrainsMono Nerd Font"
 font-size = 16
 

@@ -5,10 +5,12 @@
     programs.steam = {
 	    enable = true;
     };
+
     programs.neovim = {
         enable = true;
         defaultEditor = true;
     };
+
     programs.git = {
         enable = true;
         package = pkgs.git.override { withLibsecret = true; };
@@ -16,6 +18,17 @@
             credential.helper = "libsecret";
         };
     };
+
+    programs.thunar.enable = true;
+
+    programs.thunar.plugins = with pkgs.xfce; [
+        thunar-archive-plugin
+        thunar-volman
+    ];
+
+
+    services.gvfs.enable = true; # Mount, trash, and other functionalities
+    services.tumbler.enable = true; # Thumbnail support for images
     programs.obs-studio = {
         enable = true;
         enableVirtualCamera = true;
@@ -29,17 +42,29 @@
           droidcam-obs
         ];
     };
-    programs.gnupg.agent = {
-        enable = true;
-        enableSSHSupport = true;
+
+    # dev stuff kinda
+    virtualisation.docker = {
+      enable = true;
     };
+
+    virtualisation.virtualbox.host.enable = true;
+
+    services.mysql = {
+        enable = true;
+        package = pkgs.mariadb;
+    };
+    # --------------------------
+    # drawing tablet support
     hardware.opentabletdriver.enable = true;
+    services.libinput.enable = true;
+
+
     environment.systemPackages = with pkgs; [
             wofi # rofi
             grim # xclip
             slurp # maim
-            wl-clipboard # xsel
-            #hyprland plugins
+            wl-clipboard
             hyprland-protocols
             xdg-utils
             #cursors
@@ -48,29 +73,16 @@
             nwg-look pavucontrol easyeffects
             #iruin webcam
             #tui tools
-            tmux btop zellij gh fzf vim yazi mpv
+            btop fzf vim yazi mpv
             #utilities
-            libsecret psmisc playerctl zenity mpd # xdg-utils
+            libsecret psmisc playerctl zenity mpd unzip zip usbutils stow curl
             # misc tui
-            cava evtest ani-cli rustcat rmpc fastfetch
+            cava evtest ani-cli rmpc fastfetch
 
             #terminals
             ghostty
 
-            #graphical apps
-            onlyoffice-desktopeditors
-            krita
             vesktop
-            vscodium
-            spotify
-            nautilus
-
-            #compilers and sdk's
-            clang jdk21 nodejs_24 lua python3 typescript zig rustc
-            #language server protocols
-            astro-language-server pyright lua-language-server yaml-language-server
-            typescript-language-server kotlin-language-server jdt-language-server
-            vscode-langservers-extracted vscode-css-languageserver nixd
     ];
 
     # fonts

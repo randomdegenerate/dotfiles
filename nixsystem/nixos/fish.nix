@@ -4,10 +4,11 @@
 	programs.fish = {
 		enable = true;
 		shellAliases = {
-            nixconfig="sudoedit /etc/nixos/configuration.nix";
+            nixconfig="nvim ~/nixsystem/.";
+            nixrebuild="sudo nixos-rebuild switch --flake ~/nixsystem/#GumiTeto";
 			# developer aliases
 			nix-shell="nix-shell --run $SHELL";
-            "nix develop"="nix develope --command $SHELL";
+            "nix develop"="nix develop --command $SHELL";
 			## Useful aliases
 			# Replace ls with eza
 			ls="eza -al --color=always --group-directories-first --icons=always"; # preferred listing
