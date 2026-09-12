@@ -14,9 +14,9 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term foot
+set $term ghostty
 # Your preferred application launcher
-set $menu wmenu-run
+set $menu wofi --show run
 
 ### Output configuration
 #
@@ -29,14 +29,17 @@ output DP-1 resolution 2560x1440@165Hz position 1920,0
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
-
+font pango:iosevka 18
 workspace 1 output DP-1
 workspace 2 output DP-1
 workspace 3 output HDMI-A-1
+
+gaps inner 1
+gaps outer 1
+corner_radius 8
+default_border none
 #
 
-gaps inner 40
-gaps outer 40
 # Example configuration:
 #
 # exec swayidle -w \
@@ -71,12 +74,12 @@ gaps outer 40
 # Basics:
 #
     # Start a terminal
-    bindsym $mod+Return exec ghostty
+    bindsym $mod+Return exec $term
 # Kill focused window
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    bindsym $mod+x exec wofi --show run
+    bindsym $mod+x exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -201,25 +204,37 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
 bindsym $mod+r mode "resize"
 #
 # Utilities:
 #
     # Special keys to adjust volume via PulseAudio
-    bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
-    bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
-    bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
+    bindsym --locked XF86AudioMute exec wpctl set-mute toggle
+    bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+    bindsym --locked XF86AudioRaiseVolume exec pactl set-volume @DEFAULT_AUDIO_SINK@ 5%-
     bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
     # Special keys to adjust brightness via brightnessctl
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
     # Special key to take a screenshot with grim
-    bindsym Print exec grim
+    bindsym $mod+Prior exec grimshot save window
+    bindsym $mod+Shift+Prior exec grim -g "$(slurp)" -  | tee "$HOME/Pictures/Screenshots"/"Screenshot_$(date +%Y%m%d-%H%M%S).png" | wl-copy
 
 #
 # Status Bar:
 #
+
+include  catppuccin-mocha
 # Read `man 5 sway-bar` for more information about this section.
+# target                 title     bg    text   indicator  border
+client.focused           $lavender $base $text  $rosewater $lavender
+client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
+client.unfocused         $overlay0 $base $text  $rosewater $overlay0
+client.urgent            $peach    $base $peach $overlay0  $peach
+client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
+client.background        $base
+
 bar {
     position top
 
@@ -228,11 +243,18 @@ bar {
     swaybar_command swaybar
     status_command i3status-rs ~/.config/i3status-rust/config.toml
 
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+  colors {
+    background         $base
+    statusline         $text
+    focused_statusline $text
+    focused_separator  $base
+
+    # target           border bg        text
+    focused_workspace  $base  $mauve    $crust
+    active_workspace   $base  $surface2 $text
+    inactive_workspace $base  $base     $text
+    urgent_workspace   $base  $red      $crust
+  }
 }
 
 include /etc/sway/config.d/*

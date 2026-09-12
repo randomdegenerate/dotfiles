@@ -105,5 +105,6 @@
           iosevka
           font-awesome
           corefonts
+          font-awesome_6
     ];
 }
