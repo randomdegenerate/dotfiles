@@ -34,6 +34,8 @@
             zellij
             gh
             rustcat
+
+            # AI BULLSHIT
             opencode
             ollama
             llama-cpp-rocm

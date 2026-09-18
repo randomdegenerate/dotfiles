@@ -42,8 +42,9 @@ in
   };
 
   # Use the systemd-boot EFI boot loader.
+  # now limine
   boot = {
-	  loader.systemd-boot.enable = true;
+	  loader.limine.enable = true;
 	  loader.efi.canTouchEfiVariables = true;
 	  kernelModules = [ "v4l2loopback" "uinput" ];
 	  extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
@@ -137,6 +138,13 @@ in
   };
 
   programs.hyprlock.enable = true;
+
+  catppuccin = {
+    enable = true;
+    accent = "mauve";
+    flavor = "mocha";
+    gtk.icon.enable = true;
+  };
 
   # power services
   services.tuned.enable = true;

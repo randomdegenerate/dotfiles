@@ -29,7 +29,7 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
-
+    catppuccin.url = "github:catppuccin/nix";
     # hyprland plugins
     hy3 = {
       url = "github:outfoxxed/hy3";
@@ -58,6 +58,7 @@
 
             modules = [
                 ./nixos/configuration.nix
+                inputs.catppuccin.nixosModules.catppuccin
             ];
         };
     };
